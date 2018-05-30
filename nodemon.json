@@ -1,0 +1,24 @@
+{
+    "restartable": "rs",
+    "ignore": [
+        ".git",
+        "node_modules/**/node_modules"
+    ],
+    "verbose": false,
+    "execMap": {
+        "": "node",
+        "js": "node --harmony"
+    },
+    "events": {
+        "start":"echo 服务器启动中... && echo.",
+        "restart": "echo 服务器重启中... && echo."
+    },
+    "watch": [
+        "*"
+    ],
+    "env": {
+        
+    },
+    "ext": "js json",
+    "legacy-watch": false
+}
