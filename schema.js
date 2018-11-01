@@ -1,6 +1,7 @@
 import Sequelize from "sequelize";
 import moment  from "moment";
 import config from "./sqlconfig";
+// const sequelize = new Sequelize('sqlite:/home/archermind/Documents/SQLite/dbname.db')
 const sequelize = new Sequelize(config.database,config.username,config.password, {
     host:config.host,
     port:config.port,
@@ -18,6 +19,26 @@ const Users = sequelize.define("users",{
         type:Sequelize.UUID,
         defaultValue:Sequelize.UUIDV4,//默认值(有UUIDV4和UUIDV1)
         primaryKey:true//是否为主键
+    },
+    email:{
+        type:Sequelize.STRING,
+        allowNull:false,//非空
+        unique:true,//唯一
+        primaryKey:true,//是否为主键
+        validate:{
+            is:{args:["^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$"],msg:"邮箱格式错误"},
+            isUnique:(email,next)=>{
+                Users.find({where:{email:email}})
+                .done((user)=>{
+                    if(user){
+                        next("该邮箱已被注册");//next传值则进入错误，不传正确
+                    }else{
+                        next();
+                    }
+                    
+                })
+            }
+        }
     },
     username:{
         type:Sequelize.STRING,
@@ -39,6 +60,10 @@ const Users = sequelize.define("users",{
                 })
             }
         }
+    },
+    name:{
+        type:Sequelize.STRING,
+        allowNull:true//非空
     },
     password:{
         type:Sequelize.STRING,

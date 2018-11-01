@@ -1,15 +1,16 @@
 import Router from "koa-router";
 import { Users } from "../../schema";
+import Cache from '../../utils/cache';
+
+let cache = new Cache();
+
 const routes = Router();
 routes.post("/",async (ctx,next) => {
     next();
     let username = ctx.request.body.username;
     let password = ctx.request.body.password;
-    // const user = await Users.create({
-    //     username:username,
-    //     password:password,
-    // })
-    // ctx.body = {data:user,message:"用户创建成功"}
+    cache.set(username,{username:username,password:password},20);
+    const a = cache.get('admin')
     const user = await Users.findOne({where:{username:username}});
     if(!user) return ctx.body = {error:"用户不存在"};
     if(user.password != password) return ctx.body = {error:"密码错误"};
