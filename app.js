@@ -13,7 +13,9 @@ import Cache from "./utils/cache";
 const app = new Koa();
 global.globalCache = new Cache();
 let port = process.env.PORT || 3000;
+
 global.IPorProt = getIPAdress() + ":" + port;
+if(process.env.NODE_ENV === 'production') IPorProt =  "47.106.234.113";
 
 app.use(serve(__dirname + "/public"));//静态文件路径
 app.use(bodyParser()); //处理post请求的body参数
@@ -46,7 +48,11 @@ function startServer(p){
         }
     })
     server.on("listening",()=>{
-        logger.success(`服务器启动成功... \n地址 ${getIPAdress()}:${p}`);//获取本机ip
+        if(process.env.NODE_ENV === "production"){
+            logger.success(`服务器启动成功... \n地址 ${IPorProt}:${p}`);//获取本机ip
+        }else{
+            logger.success(`服务器启动成功... \n地址 ${getIPAdress()}:${p}`);//获取本机ip
+        }
     })
     return io;
 }
