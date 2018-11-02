@@ -103,7 +103,7 @@ routes.get("/confirmed",async (ctx,next) => {//:name表示在url中这个位置�
     if(emailCache.get(appId) != verifyId) isSuccess = false;
     if(isSuccess){
         emailCache.del(appId);
-        successCache.set(appId,"success",1800);
+        successCache.set(appId,"success",300);
         let socketId = globalCache.get(appId);
         io.to(socketId).emit("confirmedFinish");
     };
@@ -115,7 +115,12 @@ routes.get("/confirmed",async (ctx,next) => {//:name表示在url中这个位置�
     ctx.response.type = "text/html";
     ctx.body = html;
 })
-
+routes.get("/getVerifyResult",async (ctx,next) => {
+    next();
+    const { appId } = ctx.request.query;
+    if(successCache.get(appId) && !emailCache.get(appId)) return ctx.body = {success:"验证成功"};
+    ctx.body = {error:"您还未完成验证"}
+})
 //获取验证码
 routes.post("/getCaptcha",async (ctx,next) => {
     let appId;
