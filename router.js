@@ -10,7 +10,6 @@ const routes = new router();
 routes.use(async (ctx,next) => {
     return next().catch((err) => {
         if(err.status === 401) {
-            console.log(11111)
             throw new Error("登录验证无效,请重新登录")
         } else {
             throw err

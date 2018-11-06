@@ -92,6 +92,7 @@ const Users = sequelize.define("users",{
         bothCoordsOrNone: function() {
             if (!this.username) throw new Error("用户名不能为空");
             if (!this.password) throw new Error("密码不能为空");
+            if (!this.email) throw new Error("邮箱不能为空");
         }
     }
 })
