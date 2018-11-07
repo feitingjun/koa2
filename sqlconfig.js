@@ -6,4 +6,4 @@ const config = {
     port: 3306 // 端口号，MySQL默认3306
 };
 
-export default config;x
+export default config;
