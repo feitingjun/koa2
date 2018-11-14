@@ -7,6 +7,7 @@ import bodyParser from "koa-bodyparser";
 import logger from "./middleware/logger";
 import error from "./middleware/error";
 import router from "./router";
+import "./utils/rewrite";
 import getIPAdress from "./utils/getIPAdress";
 import Cache from "./utils/cache";
 

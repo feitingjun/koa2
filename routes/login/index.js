@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import Router from "koa-router";
-import { Users } from "../../schema";
+import { Users,Groups } from "../../schema";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import uuid from "node-uuid";
@@ -35,10 +35,9 @@ routes.post("/",async (ctx,next) => {
 //注册
 routes.post("/registered",async (ctx,next) => {
     next();
-    // let username = ctx.request.body.username;
-    // let password = ctx.request.body.password;
-    const user = await Users.create(ctx.request.body)
-    ctx.body = {data:user,success:"注册成功"}
+    const user = await Users.create(ctx.request.body);
+    const group = await Groups.create({userId:user.id,groupName:'我的好友'});
+    ctx.body = {data:user,success:"注册成功"};
 })
 
 

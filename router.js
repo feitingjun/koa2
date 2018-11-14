@@ -19,7 +19,7 @@ routes.use(async (ctx,next) => {
 routes.use(koajwt({
     secret: "token"
 }).unless({
-    path: [/^\/login/,"/home"]
+    path: [/^\/login/]
 }))
 
 routes.use("/home",Home.routes(),Home.allowedMethods());
