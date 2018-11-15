@@ -38,5 +38,22 @@ routes.post("/getFriensList",async (ctx,next) => {
     
     ctx.body = {data: data,success:"查询成功"}
 })
+
+routes.post("/searchUser",async (ctx,next) => {
+    next();
+    const { message } = ctx.request.body;
+    const users = await Users.findAll({
+        where:{
+            [Op.or]: [{
+                username:{[Op.regexp]: message}
+            },{
+                name:{[Op.regexp]: message}
+            },{
+                email:{[Op.regexp]: message}
+            }]
+        }
+    })
+    ctx.body = {data: users,success: "查询成功"}
+})
 //select a.*,b.* from (select *,friendId as needId from koa.friends where userGroupId='6c4e23aa-a3e3-4790-bce5-072cabcdfbc2' union select *,userId as needId from koa.friends where friendGroupId='6c4e23aa-a3e3-4790-bce5-072cabcdfbc2') a inner join koa.users b on a.needId=b.id
 export default routes;
