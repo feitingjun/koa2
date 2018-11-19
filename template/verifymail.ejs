@@ -1,13 +1,28 @@
 <!DOCTYPE html>
-<html lang="en" style="width: 100%">
+<html lang="en" style="width: 100%;height: 100%;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no">
     <title>验证邮件</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+    </style>
 </head>
-<body style="width: 100%">
-    <div style="height: 100%;width: 100%;background: #ccc;padding-top: 50px">
+<body style="width: 100%;height: 100%;">
+    <div style="
+        width:100%;
+        height: 100%;
+        background: #f1f1f1;
+        background-image: url(/images/bg.jpg);
+        background-size: cover;
+        display: flex;
+        align-items: center;
+    ">
         <div style="
             width: 70%
             ;margin: 0 auto;
@@ -18,6 +33,7 @@
             box-shadow: 2px 2px 10px #888888;
             color: #555;
             line-height: 32px;
+            max-width: 800px;
         ">
             <div style="
                 height: 10px;
@@ -27,8 +43,8 @@
                 background-image: -webkit-linear-gradient(-45deg,#f1f1f1 15%, #FF6403 15%,#FF6403 45%, #f1f1f1 45%,#f1f1f1 60%,#599ec3  60%,#599ec3  90%,#f1f1f1 90%);
             "></div>
             <div style="padding: 0px 20px">
-                <p><span style="color: #3388ff;text-decoration: underline;">449221252@qq.com</span>，您好！</p>
-                <p>您正在申请xxApp的注册认证（5分钟内有效），你可以</p>
+                <p><span style="color: #3388ff;text-decoration: underline;"><%= email %></span>，您好！</p>
+                <p>您正在申请xxApp的注册认证（5分钟内有效），请点击按钮完成验证</p>
                 <p style="padding: 20px 0px">
                     <a  style="
                         display: inline-block;
@@ -40,10 +56,12 @@
                         href="http://<%= IPorProt %>/login/confirmed?appId=<%= appId %>&verifyId=<%= verifyId %>"
                     >马上认证</a>
                 </p>
-                <p>或复制下方链接到浏览器中完成认证</p>
-                <a href="http://<%= IPorProt %>/emailverify.html?appId=<%= appId %>&verifyId=<%= verifyId %>">http://<%= IPorProt %>/emailverify.html?appId=<%= appId %>&verifyId=<%= verifyId %></a>
-                <p style="border-top: 1px solid #ccc;padding-top: 10px;color: #aaa; margin-top: 40px">本邮件由系统发出，请勿直接回复！</p>
-                <p style="color: #aaa; margin-top: 10px">如非本人操作，请忽略此邮件</p>
+                <% if (isShowLink) { %>
+                    <p>或复制下方链接到浏览器中完成认证</p>
+                    <a href="http://<%= IPorProt %>/login/emailverify?email=<%= email %>&appId=<%= appId %>&verifyId=<%= verifyId %>">http://<%= IPorProt %>/login/emailverify?email=<%= email %>&appId=<%= appId %>&verifyId=<%= verifyId %></a>
+                    <p style="border-top: 1px solid #ccc;padding-top: 10px;color: #aaa; margin-top: 40px">本邮件由系统发出，请勿直接回复！</p>
+                    <p style="color: #aaa; margin-top: 10px">如非本人操作，请忽略此邮件</p>
+                <% } %>
             </div>
         </div>
     </div>

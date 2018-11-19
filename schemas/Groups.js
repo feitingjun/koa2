@@ -16,6 +16,10 @@ const Schema = (sequelize) =>  {
             type:Sequelize.STRING,
             allowNull:false,//非空
         },
+        isDefault:{
+            type: Sequelize.BOOLEAN,
+            defaultValue: 0
+        },
         createTime:{
             type:Sequelize.DATE,
             allowNull:false,//非空

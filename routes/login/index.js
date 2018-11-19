@@ -36,7 +36,7 @@ routes.post("/",async (ctx,next) => {
 routes.post("/registered",async (ctx,next) => {
     next();
     const user = await Users.create(ctx.request.body);
-    const group = await Groups.create({userId:user.id,groupName:'我的好友'});
+    const group = await Groups.create({userId:user.id,groupName:'我的好友',isDefault: 1});
     ctx.body = {data:user,success:"注册成功"};
 })
 
@@ -61,7 +61,9 @@ routes.post("/sendemail",async (ctx,next) => {
     const html = emailTemplate({
         appId: appId,
         verifyId: verifyId,
-        IPorProt: IPorProt
+        IPorProt: IPorProt,
+        email: email,
+        isShowLink: true
     });
       
     const transporter = nodemailer.createTransport({
@@ -88,10 +90,22 @@ routes.post("/sendemail",async (ctx,next) => {
             console.log("发送成功");
         });
     })
-    ctx.socket.on("connection",()=>{
-        console.log(11111111111)
-    })
     ctx.body = {data:null,success:"已发送"}
+})
+
+//验证模板
+routes.get("/emailverify",async (ctx,next) => {//:name表示在url中这个位置的值是变量
+    next();
+    const { email,appId,verifyId } = ctx.request.query;
+    const html = emailTemplate({
+        appId: appId,
+        verifyId: verifyId,
+        IPorProt: IPorProt,
+        email: email,
+        isShowLink: false
+    });
+    ctx.response.type = "text/html";
+    ctx.body = html;
 })
 
 //验证确认
@@ -114,6 +128,8 @@ routes.get("/confirmed",async (ctx,next) => {//:name表示在url中这个位置�
     ctx.response.type = "text/html";
     ctx.body = html;
 })
+
+//获取验证结果
 routes.get("/getVerifyResult",async (ctx,next) => {
     next();
     const { appId } = ctx.request.query;

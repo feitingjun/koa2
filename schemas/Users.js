@@ -58,6 +58,10 @@ const Schema = (sequelize) =>  {
             allowNull:false,//非空
             len:{args:[6,18],msg:"密码必须在6到18个字符之间"}
         },
+        headPortrait:{
+            type:Sequelize.STRING,
+            defaultValue: "/images/headers/header.jpg"
+        },
         createTime:{
             type:Sequelize.DATE,
             allowNull:false,//非空

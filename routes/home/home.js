@@ -16,8 +16,8 @@ routes.get("/",async (ctx,next) => {
     next();
     ctx.response.type = "text/html";
     ctx.response.body = `
-    <form action="/home" method="post">
-        姓名:<input name="username" /><br/>
+    <form action="/user/getFriensList" method="post">
+        姓名:<input name="message" /><br/>
         密码:<input name="password" type="password" /><br/>
         <input type="submit" value="提交" />
     </form>

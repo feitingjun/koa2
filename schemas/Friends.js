@@ -27,8 +27,12 @@ const Schema = (sequelize) =>  {
         friendGroupId:{
             type:Sequelize.STRING,
         },
+        message:{
+            type:Sequelize.STRING,
+        },
         status:{
-            type: Sequelize.BOOLEAN
+            type: Sequelize.BOOLEAN,
+            defaultValue: 0 //  0为待验证，1为通过，2为未通过，3为拉黑，4为删除
         },
         createTime:{
             type:Sequelize.DATE,
