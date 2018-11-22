@@ -1,8 +1,5 @@
 import router from "koa-router";
-import Home from "./routes/home/home";
-import Index from "./routes/index";
-import Login from "./routes/login/index";
-import User from "./routes/user/index";
+import fs from "fs";
 import koajwt from "koa-jwt";
 const routes = new router();
 
@@ -22,10 +19,12 @@ routes.use(koajwt({
     path: [/^\/login/]
 }))
 
-routes.use("/home",Home.routes(),Home.allowedMethods());
-routes.use("/index",Index.routes(),Index.allowedMethods());
-routes.use("/login",Login.routes(),Login.allowedMethods());
-routes.use("/user",User.routes(),User.allowedMethods());
+const files = fs.readdirSync('./routes')
+files.map((v,i) => {
+    const file  = require(`./routes/${v}`).default;
+    const fileName = v.substr(0,v.indexOf('.'));
+    routes.use(`/${fileName}`,file.routes(),file.allowedMethods());
+})
 
 routes.use("*",async (ctx,next) => {
     ctx.response.type = "application/json";//返回格式

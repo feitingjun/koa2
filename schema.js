@@ -1,7 +1,6 @@
 import Sequelize from "sequelize";
 import moment  from "moment";
 import fs from "fs";
-import path from "path";
 import config from "./sqlconfig";
 // const sequelize = new Sequelize('sqlite:/home/archermind/Documents/SQLite/dbname.db')
 const sequelize = new Sequelize(config.database,config.username,config.password, {

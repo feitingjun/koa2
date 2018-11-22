@@ -1,6 +1,6 @@
 import Router from "koa-router";
-import { Users,Groups } from "../../schema.js";
-import Cache from '../../utils/cache';
+import { Users,Groups } from "../schema.js";
+import Cache from '../utils/cache';
 
 const routes = Router();
 routes.post("/",async (ctx,next) => {

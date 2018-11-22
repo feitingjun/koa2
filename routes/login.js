@@ -1,17 +1,17 @@
 import fs from "fs";
 import path from "path";
 import Router from "koa-router";
-import { Users,Groups } from "../../schema";
+import { Users,Groups } from "../schema";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import uuid from "node-uuid";
 import svgCaptcha from "svg-captcha";
 import ejs from "ejs";
-import Cache from "../../utils/cache";
-import svgConvertBase64 from "../../utils/svgConvertBase64";
+import Cache from "../utils/cache";
+import svgConvertBase64 from "../utils/svgConvertBase64";
 
-const emailTemplate = ejs.compile(fs.readFileSync(path.resolve(__dirname, '../../template/verifymail.ejs'), 'utf8'));
-const resultTemplate = ejs.compile(fs.readFileSync(path.resolve(__dirname, '../../template/verifyresult.ejs'), 'utf8'));
+const emailTemplate = ejs.compile(fs.readFileSync(path.resolve(__dirname, '../template/verifymail.ejs'), 'utf8'));
+const resultTemplate = ejs.compile(fs.readFileSync(path.resolve(__dirname, '../template/verifyresult.ejs'), 'utf8'));
 
 const captchaCache = new Cache();
 const emailCache = new Cache();
