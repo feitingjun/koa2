@@ -31,16 +31,6 @@ routes.post("/",async (ctx,next) => {
     ctx.body = {data:user,success:"登录成功",token: token};
 })
 
-
-//注册
-routes.post("/registered",async (ctx,next) => {
-    next();
-    const user = await Users.create(ctx.request.body);
-    const group = await Groups.create({userId:user.id,groupName:'我的好友',isDefault: 1});
-    ctx.body = {data:user,success:"注册成功"};
-})
-
-
 //发送验证邮件
 routes.post("/sendemail",async (ctx,next) => {
     next();
