@@ -16,13 +16,6 @@ routes.get("/info",async (ctx,next) => {
     if(!user) return ctx.body = {error:"用户不存在"};
     ctx.body = {data:user,success:"获取用户信息成功"};
 })
-//新增用户
-routes.post("/",async (ctx,next) => {
-    next();
-    const user = await Users.create(ctx.request.body);
-    const group = await Groups.create({userId:user.id,groupName:'我的好友',isDefault: 1});
-    ctx.body = {data:user,success:"注册成功"};
-})
 
 //根据id获取用户详情
 routes.get("/",async (ctx,next) => {

@@ -36,7 +36,7 @@ routes.post("/sendemail",async (ctx,next) => {
     next();
     const { email, verificationCode,appId } = ctx.request.body;
     const user = await Users.findOne({where:{email:email}});
-    if(user) return ctx.body = {error:"该邮箱已被注册"};
+    // if(user) return ctx.body = {error:"该邮箱已被注册"};
     if(!captchaCache.get(appId)){
         ctx.body = {data:null,error:"验证码已过期"}
         return false;
@@ -156,5 +156,12 @@ routes.post("/getCaptcha",async (ctx,next) => {
         },
         success: "执行成功"
     }
+})
+//注册用户
+routes.post("/register",async (ctx,next) => {
+    next();
+    const user = await Users.create(ctx.request.body);
+    const group = await Groups.create({userId:user.id,groupName:'我的好友',isDefault: 1});
+    ctx.body = {data:user,success:"注册成功"};
 })
 export default routes;

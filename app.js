@@ -26,13 +26,23 @@ app.use(router.routes(),router.allowedMethods());
 const io = startServer(port);
 global.io = io;
 io.on("connection",(socket) => {
+
+    let currentAppId,currentUserId;
     logger.success("socket连接成功")
-    socket.on("saveMessage",({ appId }) => {
-        global.globalCache.set(appId,socket.id);
+    socket.on("saveAppId",({ appId }) => {
+        global.globalCache.set(appId, socket.id);
+        currentAppId = appId;
     })
+    socket.on("enterHome", ({ userId }) => {
+        console.log(`用户${userId}登录成功`);
+        global.globalCache.set(userId, socket.id);
+        currentUserId = userId
+    })
+
     socket.on("disconnect",() => {
-        global.globalCache.del(socket.id);
-        logger.error("socket断开连接");
+        global.globalCache.del(currentAppId);
+        global.globalCache.del(currentUserId);
+        logger.error(`用户${currentUserId}断开连接`);
     })
 })
 

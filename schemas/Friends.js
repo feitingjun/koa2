@@ -15,16 +15,10 @@ const Schema = (sequelize) =>  {
             type:Sequelize.STRING,
             allowNull:false,//非空
         },
-        userRemark:{
+        remark:{
             type:Sequelize.STRING,
         },
-        friendRemark:{
-            type:Sequelize.STRING,
-        },
-        userGroupId:{
-            type:Sequelize.STRING,
-        },
-        friendGroupId:{
+        groupId:{
             type:Sequelize.STRING,
         },
         message:{
@@ -33,6 +27,10 @@ const Schema = (sequelize) =>  {
         status:{
             type: Sequelize.BOOLEAN,
             defaultValue: 0 //  0为待验证，1为通过，2为未通过，3为拉黑，4为删除
+        },
+        apply:{
+            type: Sequelize.BOOLEAN,
+            defaultValue: true 
         },
         createTime:{
             type:Sequelize.DATE,
