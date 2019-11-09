@@ -12,4 +12,4 @@ const getIPAdress = () => {
         }
     }
 }
-export default getIPAdress;
+export default getIPAdress; 
